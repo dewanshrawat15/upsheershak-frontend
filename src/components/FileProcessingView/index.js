@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import "./index.css";
 
+const VideoPlayer = (props) => {
+    const { fileURL } = props;
+    return <center>
+        <video controls style={{
+            paddingTop: 42
+        }} src={fileURL} width="512" />
+    </center>
+}
+
 export default function FileProcessingView(props){
 
-    const { fileKey } = props;
+    const { fileKey, processFileResult } = props;
     const [fileDetails, updateFileDetails] = useState({});
-    const [fileResult, updateFileResult] = useState({});
 
     const toast = useToast();
 
@@ -15,6 +23,7 @@ export default function FileProcessingView(props){
     }
 
     const getFileResult = async () => {
+        await timeout(6000);
         let myHeaders = new Headers();
         myHeaders.append("accept", "application/json");
 
@@ -22,45 +31,46 @@ export default function FileProcessingView(props){
             method: 'GET',
             headers: myHeaders
         };
-        const res = await fetch("http://localhost:8000/api/file/result/?key=" + fileKey, requestOptions);
+        const res = await fetch("http://localhost:8000/api/file/results/?key=" + fileKey, requestOptions);
         const fileResult = await res.json()
-        console.info(fileResult);
-        updateFileResult(fileResult);
+        processFileResult(fileResult);
     }
 
     const checkIfFileProcessingComplete = async () => {
-        let myHeaders = new Headers();
-        myHeaders.append("accept", "application/json");
+        // let myHeaders = new Headers();
+        // myHeaders.append("accept", "application/json");
 
-        let requestOptions = {
-            method: 'GET',
-            headers: myHeaders
-        };
-        const res = await fetch("http://localhost:8000/api/file/status/?key=" + fileKey, requestOptions);
-        const statusResult = await res.json()
-        if(statusResult.status){
-            getFileResult();
-        } else {
-            await timeout(2000);
-            checkIfFileProcessingComplete();
-        }
+        // let requestOptions = {
+        //     method: 'GET',
+        //     headers: myHeaders
+        // };
+        // const res = await fetch("http://localhost:8000/api/file/status/?key=" + fileKey, requestOptions);
+        // const statusResult = await res.json()
+        // if(statusResult.status){
+        //     getFileResult();
+        // } else {
+        //     await timeout(2000);
+        //     checkIfFileProcessingComplete();
+        // }
+        getFileResult()
     }
 
     const trigerrProcessing = () => {
-        let myHeaders = new Headers();
-        myHeaders.append("accept", "application/json");
+        // let myHeaders = new Headers();
+        // myHeaders.append("accept", "application/json");
 
-        let requestOptions = {
-            method: 'GET',
-            headers: myHeaders
-        };
+        // let requestOptions = {
+        //     method: 'GET',
+        //     headers: myHeaders
+        // };
 
-        fetch("http://localhost:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            checkIfFileProcessingComplete();
-        })
-        .catch(error => console.log('error', error));
+        // fetch("http://localhost:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
+        // .then(response => response.json())
+        // .then(result => {
+        //     checkIfFileProcessingComplete();
+        // })
+        // .catch(error => console.log('error', error));
+        checkIfFileProcessingComplete()
     }
 
     useEffect(() => {
@@ -94,6 +104,8 @@ export default function FileProcessingView(props){
     }, [])
 
     return <div className="file-processing-view">
-        {fileDetails ? fileDetails.file ? <video src={fileDetails.file} width="400" /> : <></> : <></>}
+        {fileDetails ? fileDetails.data ?
+            <VideoPlayer fileURL={fileDetails.data.file} />
+        : <></> : <></>}
     </div>
 }
