@@ -58,7 +58,6 @@ export default function FileProcessingView(props){
             await timeout(5000);
             checkIfFileProcessingComplete();
         }
-        getFileResult()
     }
 
     const trigerrProcessing = () => {
