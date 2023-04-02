@@ -37,40 +37,45 @@ export default function FileProcessingView(props){
     }
 
     const checkIfFileProcessingComplete = async () => {
-        // let myHeaders = new Headers();
-        // myHeaders.append("accept", "application/json");
+        let myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
 
-        // let requestOptions = {
-        //     method: 'GET',
-        //     headers: myHeaders
-        // };
-        // const res = await fetch("http://localhost:8000/api/file/status/?key=" + fileKey, requestOptions);
-        // const statusResult = await res.json()
-        // if(statusResult.status){
-        //     getFileResult();
-        // } else {
-        //     await timeout(2000);
-        //     checkIfFileProcessingComplete();
-        // }
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders
+        };
+        const res = await fetch("http://localhost:8000/api/file/status/?key=" + fileKey, requestOptions);
+        const statusResult = await res.json()
+        if(statusResult.status){
+            getFileResult();
+        } else {
+            toast({
+                title: 'File is still being processed',
+                status: 'warning',
+                duration: 1200,
+                isClosable: true,
+            });
+            await timeout(5000);
+            checkIfFileProcessingComplete();
+        }
         getFileResult()
     }
 
     const trigerrProcessing = () => {
-        // let myHeaders = new Headers();
-        // myHeaders.append("accept", "application/json");
+        let myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
 
-        // let requestOptions = {
-        //     method: 'GET',
-        //     headers: myHeaders
-        // };
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders
+        };
 
-        // fetch("http://localhost:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
-        // .then(response => response.json())
-        // .then(result => {
-        //     checkIfFileProcessingComplete();
-        // })
-        // .catch(error => console.log('error', error));
-        checkIfFileProcessingComplete()
+        fetch("http://localhost:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            checkIfFileProcessingComplete();
+        })
+        .catch(error => console.log('error', error));
     }
 
     useEffect(() => {
