@@ -1,0 +1,27 @@
+.file-uploader-dashboard {
+    padding: 32px 80px;
+}
+
+.file-uploader-box {
+    padding-top: 64px;
+    padding-bottom: 65px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: #efefef;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px 2px #a7a7a7;
+    cursor: pointer;
+    text-align: center;
+}
+
+.upload-file {
+    padding: 6px 32px;
+    border-radius: 42px;
+    cursor: pointer;
+    border: 2px solid #15171c;
+}
+
+#lang-codes {
+    border-bottom: 2px solid #15171c;
+    width: 240px;
+}
