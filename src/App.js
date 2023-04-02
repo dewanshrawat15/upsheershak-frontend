@@ -23,8 +23,8 @@ const BaseEL = (props) => {
 
 function App() {
 
-  const [appState, updateAppState] = useState(AppState.PROCESSING);
-  const [fileKey, updateFileKey] = useState("BWPH434S");
+  const [appState, updateAppState] = useState(AppState.INIT);
+  const [fileKey, updateFileKey] = useState("");
   const [fileResult, updateFileResult] = useState({});
 
   const processFileKey = (key) => {

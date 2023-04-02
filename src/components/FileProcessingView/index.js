@@ -31,7 +31,7 @@ export default function FileProcessingView(props){
             method: 'GET',
             headers: myHeaders
         };
-        const res = await fetch("http://localhost:8000/api/file/results/?key=" + fileKey, requestOptions);
+        const res = await fetch("http://54.71.158.103:8000/api/file/results/?key=" + fileKey, requestOptions);
         const fileResult = await res.json()
         processFileResult(fileResult);
     }
@@ -44,7 +44,7 @@ export default function FileProcessingView(props){
             method: 'GET',
             headers: myHeaders
         };
-        const res = await fetch("http://localhost:8000/api/file/status/?key=" + fileKey, requestOptions);
+        const res = await fetch("http://54.71.158.103:8000/api/file/status/?key=" + fileKey, requestOptions);
         const statusResult = await res.json()
         if(statusResult.status){
             getFileResult();
@@ -70,7 +70,7 @@ export default function FileProcessingView(props){
             headers: myHeaders
         };
 
-        fetch("http://localhost:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
+        fetch("http://54.71.158.103:8000/api/file/transcribe/?key=" + fileKey, requestOptions)
         .then(response => response.json())
         .then(result => {
             checkIfFileProcessingComplete();
@@ -89,7 +89,7 @@ export default function FileProcessingView(props){
                 headers: myHeaders
             };
 
-            fetch("http://localhost:8000/api/file/details/?key=" + fileKey, requestOptions)
+            fetch("http://54.71.158.103:8000/api/file/details/?key=" + fileKey, requestOptions)
             .then(response => response.json())
             .then(async (result) => {
                 updateFileDetails(result);

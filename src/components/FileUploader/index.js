@@ -38,7 +38,7 @@ export default function FileUploader(props){
             isClosable: true,
         });
 
-        fetch("http://localhost:8000/api/file/upload/", requestOptions)
+        fetch("http://54.71.158.103:8000/api/file/upload/", requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result.key){
